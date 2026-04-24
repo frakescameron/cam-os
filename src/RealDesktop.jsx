@@ -399,7 +399,7 @@ function ProjectsApp() {
         <h2>Projects</h2>
         <p>Here's a list of my projects that I have created. Double click on any to open it.</p>
 
-        <button onDoubleClick={() => window.open("https://github.com/YOUR-USERNAME/cam-os", "_blank")}>
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/odin-recipes", "_blank")}>
           📄 Odin Recipies.txt
         </button>
 
@@ -407,7 +407,7 @@ function ProjectsApp() {
           📄 cam-os.txt
         </button>
 
-        <button onDoubleClick={() => window.open("https://github.com/YOUR-USERNAME/YOUR-WGU-REPO", "_blank")}>
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/wgu-backend-project", "_blank")}>
           📄 WGU Backend Project.txt
         </button>
       </main>
