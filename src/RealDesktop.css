@@ -705,3 +705,113 @@
 .chrome-app iframe {
   min-height: 0;
 }
+
+.app-window.maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: calc(100vh - 46px) !important;
+  border-radius: 0;
+}
+
+.app-window.maximized .window-content {
+  height: calc(100vh - 46px - 42px);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+/* Make common apps fill fullscreen */
+.app-window.maximized .terminal-app,
+.app-window.maximized .chrome-app,
+.app-window.maximized .calculator-app,
+.app-window.maximized .drawpad-app,
+.app-window.maximized .text-document,
+.app-window.maximized .file-explorer {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Terminal */
+.app-window.maximized .terminal-output {
+  height: calc(100% - 32px);
+}
+
+/* Notepad / text files */
+.app-window.maximized .notepad {
+  height: 100%;
+}
+
+/* Drawpad */
+.app-window.maximized .drawpad-app {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-window.maximized .drawpad-app canvas {
+  flex: 1;
+  height: auto;
+}
+
+/* Chrome */
+.app-window.maximized .chrome-app {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-window.maximized .chrome-app iframe {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Calculator: do NOT stretch huge */
+.app-window.maximized .calculator-app {
+  max-width: 620px;
+}
+
+/* Better maximized layout for Calculator */
+.app-window.maximized .calculator-app {
+  width: min(520px, 90vw);
+  margin: 32px auto 0;
+  height: auto;
+}
+
+.app-window.maximized .calculator-app input {
+  height: 56px;
+  font-size: 24px;
+}
+
+.app-window.maximized .calc-grid button {
+  height: 58px;
+  font-size: 20px;
+}
+
+/* Auto-fit Battle Blocks to screen height */
+.app-window.maximized .blocks-board {
+  height: calc(100vh - 190px); /* leaves room for title + padding */
+  aspect-ratio: 10 / 16;
+}
+
+/* Make cells scale automatically */
+.app-window.maximized .blocks-board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(16, 1fr);
+}
+
+/* Cells fill grid perfectly */
+.app-window.maximized .block-cell {
+  width: 100%;
+  height: 100%;
+}
+.app-window.maximized .blocks-game {
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
+  height: 100%;
+}
+
+/* Kill scrolling inside maximized windows */
+.app-window.maximized .window-content {
+  overflow: hidden;
+}
