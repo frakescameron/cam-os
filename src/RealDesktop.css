@@ -488,3 +488,220 @@
 .window-titlebar:active {
   cursor: grabbing;
 }
+
+.window-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.window-controls button {
+  width: 28px;
+  height: 26px;
+  font-size: 15px;
+}
+
+.app-window.minimized {
+  display: none;
+}
+
+.app-window.maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw;
+  height: calc(100vh - 46px);
+  border-radius: 0;
+}
+
+.shutdown-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.power-button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  font-size: 42px;
+  cursor: pointer;
+}
+
+.start-power {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.start-power button {
+  flex: 1;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+}
+
+.desktop-context-menu {
+  position: fixed;
+  width: 190px;
+  background: rgba(25, 29, 35, 0.97);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 9px;
+  padding: 6px;
+  z-index: 100;
+  box-shadow: 0 12px 30px rgba(0,0,0,.45);
+}
+
+.desktop-context-menu button {
+  width: 100%;
+  padding: 9px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.desktop-context-menu button:hover {
+  background: rgba(255,255,255,.12);
+}
+
+.file-explorer {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  height: 260px;
+  background: rgba(255,255,255,.04);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.file-explorer aside {
+  background: rgba(0,0,0,.25);
+  padding: 12px;
+  font-size: 14px;
+}
+
+.file-explorer main {
+  padding: 12px;
+}
+
+.file-explorer main button {
+  display: block;
+  width: 220px;
+  margin-bottom: 8px;
+  padding: 9px;
+  text-align: left;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.text-document {
+  background: #f4f0d8;
+  color: #111;
+  padding: 18px;
+  border-radius: 8px;
+  min-height: 220px;
+  font-family: Georgia, serif;
+}
+
+.chrome-app {
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chrome-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.chrome-bar input {
+  flex: 1;
+  height: 32px;
+  border-radius: 16px;
+  border: none;
+  padding: 0 14px;
+}
+
+.chrome-bar button {
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.chrome-app iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: white;
+  border-radius: 8px;
+}
+
+.tray {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tray button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.tray-popup {
+  position: absolute;
+  right: 12px;
+  bottom: 54px;
+  width: 230px;
+  background: rgba(18, 22, 28, 0.96);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  padding: 14px;
+  z-index: 50;
+  box-shadow: 0 16px 35px rgba(0,0,0,.45);
+}
+
+.tray-popup h3 {
+  margin-top: 0;
+}
+
+.app-window.maximized .window-content {
+  height: calc(100vh - 46px - 42px);
+  overflow: auto;
+}
+
+.app-window.maximized .drawpad-app,
+.app-window.maximized .chrome-app,
+.app-window.maximized .file-explorer {
+  height: 100%;
+}
+
+.app-window.maximized .drawpad-app canvas {
+  flex: 1;
+  height: auto;
+}
+
+.drawpad-app {
+  height: 100%;
+}
+
+.chrome-app iframe {
+  min-height: 0;
+}

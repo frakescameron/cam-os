@@ -10,9 +10,13 @@ const apps = [
   { id: "notepad", name: "Notepad", icon: "📝" },
   { id: "drawpad", name: "Drawpad", icon: "🎨" },
   { id: "battleblocks", name: "Battle Blocks", icon: "🧱" },
+  { id: "aboutme", name: "About Me", icon: "📄" },
+  { id: "fileexplorer", name: "File Explorer", icon: "🗂️" },
+  { id: "chrome", name: "Chrome", icon: "🌐" },
 ];
 
 export default function RealDesktop() {
+  const [desktopFiles, setDesktopFiles] = useState([]);
   const [openApps, setOpenApps] = useState([]);
   const [search, setSearch] = useState("");
   const [calc, setCalc] = useState("");
@@ -21,6 +25,26 @@ export default function RealDesktop() {
   const [startOpen, setStartOpen] = useState(false);
   const [windowPositions, setWindowPositions] = useState({});
   const [dragging, setDragging] = useState(null);
+  const [minimizedApps, setMinimizedApps] = useState([]);
+  const [maximizedApps, setMaximizedApps] = useState([]);
+  const [shutdown, setShutdown] = useState(false);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [wifiOpen, setWifiOpen] = useState(false);
+  const deleteLastFile = () => {
+    setDesktopFiles((prev) => prev.slice(0, -1));
+    setContextMenu(null); 
+  };
+  const addDesktopFile = () => {
+  const newFile = {
+    id: crypto.randomUUID(),
+    name: `New File ${desktopFiles.length + 1}.txt`,
+    content: "",
+  };
+
+  setDesktopFiles([...desktopFiles, newFile]);
+  setContextMenu(null);
+};
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -33,6 +57,42 @@ export default function RealDesktop() {
     }
     setSearch("");
     setStartOpen(false);
+  };
+
+
+  const minimizeApp = (id) => {
+    setMinimizedApps((prev) => [...new Set([...prev, id])]);
+  };
+
+  const restoreApp = (id) => {
+    setMinimizedApps((prev) => prev.filter((appId) => appId !== id));
+  };
+
+  const toggleMaximize = (id) => {
+    setMaximizedApps((prev) =>
+      prev.includes(id) ? prev.filter((appId) => appId !== id) : [...prev, id]
+    );
+  };
+
+  const restartSystem = () => {
+    window.location.reload();
+  };
+
+  const shutdownSystem = () => {
+    setShutdown(true);
+  };
+
+  const powerOn = () => {
+    window.location.reload();
+  };
+
+  const openContextMenu = (e) => {
+    e.preventDefault();
+    setContextMenu({ x: e.clientX, y: e.clientY });
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu(null);
   };
 
   const closeApp = (id) => {
@@ -89,42 +149,153 @@ export default function RealDesktop() {
   };
 
   return (
-    <div className="real-desktop" onMouseMove={dragWindow} onMouseUp={stopDrag}>
+    <div
+          className="real-desktop"
+          onMouseMove={dragWindow}
+          onMouseUp={stopDrag}
+          onContextMenu={openContextMenu}
+          onClick={closeContextMenu}
+        > 
+        {shutdown && (
+       <div className="shutdown-screen">
+        <button onClick={powerOn} className="power-button">⏻</button>
+      </div>
+)}
       <div className="desktop-scale">
         <div className="desktop-icons">
-          {apps.slice(0, 3).map((app) => (
-            <button
-              key={app.id}
-              className="desktop-icon"
-              onDoubleClick={() => openApp(app)}
-            >
-              <span>{app.icon}</span>
-              <p>{app.name}</p>
-            </button>
-          ))}
-        </div>
+  {/* existing icons */}
+  {apps
+    .filter((app) =>
+      ["projects", "homelab", "terminal", "aboutme"].includes(app.id)
+    )
+    .map((app) => (
+      <button
+        key={app.id}
+        className="desktop-icon"
+        onDoubleClick={() => openApp(app)}
+      >
+        <span>{app.icon}</span>
+        <p>{app.name}</p>
+      </button>
+    ))}
+
+  {/* 👇 ADD THIS HERE */}
+  {desktopFiles.map((file) => (
+    <button
+      key={file.id}
+      className="desktop-icon"
+      onDoubleClick={() =>
+        openApp({
+          id: file.id,
+          name: file.name,
+          icon: "📄",
+          type: "textfile",
+        })
+      }
+    >
+      <span>📄</span>
+      <p>{file.name}</p>
+    </button>
+  ))}
+</div>
 
         <div className="window-area">
           {openApps.map((app) => (
             <div
-              className="app-window"
+              className={`app-window ${maximizedApps.includes(app.id) ? "maximized" : ""} ${  minimizedApps.includes(app.id) ? "minimized" : "" }`}
               key={app.id}
               style={{
                 left: windowPositions[app.id]?.x ?? 180,
                 top: windowPositions[app.id]?.y ?? 110,
               }}
             >
-              <div
-                className="window-titlebar"
-                onMouseDown={(e) => startDrag(e, app.id)}
-              >
-                <span>
-                  {app.icon} {app.name}
-                </span>
-                <button onClick={() => closeApp(app.id)}>×</button>
-              </div>
+                <div
+                  className="window-titlebar"
+                  onMouseDown={(e) => startDrag(e, app.id)}
+                >
+                  <span>
+                    {app.icon} {app.name}
+                  </span>
+
+                  <div className="window-controls">
+                    <button onClick={() => minimizeApp(app.id)}>—</button>
+                    <button onClick={() => toggleMaximize(app.id)}>□</button>
+                    <button onClick={() => closeApp(app.id)}>×</button>
+                  </div>
+                </div>
 
               <div className="window-content">
+                {app.type === "textfile" && (
+                        <textarea
+                          className="notepad"
+                          value={desktopFiles.find((file) => file.id === app.id)?.content || ""}
+                          onChange={(e) =>
+                            setDesktopFiles((prev) =>
+                              prev.map((file) =>
+                                file.id === app.id ? { ...file, content: e.target.value } : file
+                              )
+                            )
+                          }
+                          placeholder="Write your file here..."
+                        />
+                      )}
+                {app.id === "aboutme" && (
+                    <div className="text-document">
+                      <h2>About Me</h2>
+                      <p>
+                        Write your introduction here. Talk about school, homelab, networking,
+                        audio, projects, and what you are working toward.
+                      </p>
+                    </div>
+                  )}
+                  {app.id === "aboutme" && (
+                      <div className="text-document">
+                        <h2>About Me</h2>
+                        <p>
+                          Write your introduction here. Talk about who you are, your CS degree,
+                          homelab, networking, audio work, and what you are building toward.
+                        </p>
+                      </div>
+                    )}
+                  {app.id === "fileexplorer" && (
+                    <div className="file-explorer">
+                      <aside>
+                        <p>📁 Projects</p>
+                        <p>📄 About Me</p>
+                        <p>🖥️ Homelab</p>
+                      </aside>
+
+                      <main>
+                        <h2>Projects</h2>
+                        <button onDoubleClick={() => openApp(apps.find((a) => a.id === "projects"))}>
+                          📄 Website Project.txt
+                        </button>
+                        <button onDoubleClick={() => openApp(apps.find((a) => a.id === "homelab"))}>
+                          📄 Homelab Notes.txt
+                        </button>
+                      </main>
+                    </div>
+                  )}
+
+                  {app.id === "chrome" && (
+                    <div className="chrome-app">
+                      <div className="chrome-bar">
+                        <span>🌐</span>
+                        <input value="https://www.google.com" readOnly />
+                        <button onClick={() => window.open("https://www.google.com", "_blank")}>
+                          Open
+                        </button>
+                      </div>
+
+                      <iframe
+                        title="Google"
+                        src="https://www.google.com/webhp?igu=1"
+                      />
+                    </div>
+                  )}
+                
+                
+                
                 {app.id === "projects" && (
                   <>
                     <h2>Projects</h2>
@@ -224,9 +395,34 @@ export default function RealDesktop() {
                 </button>
               ))}
             </div>
+              <div className="start-power">
+              <button onClick={restartSystem}>↻ Restart</button>
+              <button onClick={shutdownSystem}>⏻ Shut Down</button>
+            </div>
           </div>
         )}
+          {contextMenu && (
+  <div
+    className="desktop-context-menu"
+    style={{ left: contextMenu.x, top: contextMenu.y }}
+  >
+    <button onClick={() => openApp(apps.find((a) => a.id === "fileexplorer"))}>
+      Open File Explorer
+    </button>
 
+    <button onClick={() => openApp(apps.find((a) => a.id === "terminal"))}>
+      Open Terminal
+    </button>
+
+    <button onClick={addDesktopFile}>
+      Add File
+    </button>
+
+    <button onClick={deleteLastFile}>
+     Delete Last File
+    </button>
+  </div>
+)}
         <div className="taskbar">
           <button
             className="menu-button"
@@ -255,18 +451,38 @@ export default function RealDesktop() {
 
           <div className="taskbar-apps">
             {openApps.map((app) => (
-              <button key={app.id} onClick={() => openApp(app)}>
-                {app.icon} {app.name}
+              <button key={app.id} onClick={() => restoreApp(app.id)}>
+              {app.icon} {app.name}
               </button>
             ))}
           </div>
 
           <div className="tray">
-            {time.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </div>
+              <button onClick={() => setWifiOpen(!wifiOpen)}>📶</button>
+              <button onClick={() => setCalendarOpen(!calendarOpen)}>📅</button>
+              <span>
+                {time.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
+
+            {wifiOpen && (
+              <div className="tray-popup wifi-popup">
+                <h3>Network</h3>
+                <p>📶 CamOS-WiFi</p>
+                <p>Status: Connected</p>
+                <p>IP: 192.168.50.23</p>
+              </div>
+            )}
+
+            {calendarOpen && (
+              <div className="tray-popup calendar-popup">
+                <h3>{time.toLocaleDateString()}</h3>
+                <p>{time.toLocaleTimeString()}</p>
+              </div>
+            )}
         </div>
       </div>
     </div>
