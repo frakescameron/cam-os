@@ -393,15 +393,23 @@ function ProjectsApp() {
     <div className="file-explorer">
       <aside>
         <p>📁 Projects</p>
-        <p>📄 Website Project.txt</p>
-        <p>📄 Automation Notes.txt</p>
       </aside>
 
       <main>
         <h2>Projects</h2>
-        <button>📄 CamOS Portfolio.txt</button>
-        <button>📄 Church Website.txt</button>
-        <button>📄 WGU Backend Project.txt</button>
+        <p>Here's a list of my projects that I have created. Double click on any to open it.</p>
+
+        <button onDoubleClick={() => window.open("https://github.com/YOUR-USERNAME/cam-os", "_blank")}>
+          📄 Odin Recipies.txt
+        </button>
+
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/cam-os", "_blank")}>
+          📄 cam-os.txt
+        </button>
+
+        <button onDoubleClick={() => window.open("https://github.com/YOUR-USERNAME/YOUR-WGU-REPO", "_blank")}>
+          📄 WGU Backend Project.txt
+        </button>
       </main>
     </div>
   );
@@ -424,9 +432,17 @@ function AboutMeApp() {
     <div className="text-document">
       <h2>About Me</h2>
       <p>
-        Write your introduction here. Talk about who you are, your CS degree,
-        homelab, networking, audio work, projects, and what you are building
-        toward.
+        About Me
+
+I’m a Computer Science student at WGU focused on building real-world systems, not just completing coursework. My main interests are networking, cybersecurity, and website development, and I spend a lot of time working hands-on in my homelab to actually understand how everything works under the hood.
+
+Right now I’m running a Proxmox-based environment with Windows Server, Active Directory, DNS, DHCP, and domain-joined clients. I use it to simulate real enterprise setups and troubleshoot things the way they’d happen in an actual IT environment. I’m also working toward my CCNA and expanding into Linux and security-focused tools.
+
+On the development side, I’ve built backend applications using Spring Boot and JPA, creating APIs and working with relational data models. I like projects that combine software with infrastructure—things that actually behave like real systems instead of isolated apps.
+
+Outside of tech, I’m involved in live audio production, running sound for events and working with digital mixing consoles, routing, and signal flow. That’s pushed me to think more about system design, troubleshooting, and consistency under pressure.
+
+This project (CamOS) is a mix of everything I enjoy—development, systems thinking, and building something interactive that reflects how I approach learning. The goal isn’t just to show what I know, but how I build, test, and improve things over time.
       </p>
     </div>
   );
