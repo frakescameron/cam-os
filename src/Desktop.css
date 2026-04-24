@@ -1,0 +1,76 @@
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(0, 120, 255, 0.28), transparent 45%),
+    linear-gradient(135deg, #06172f, #020816 65%, #000);
+  color: white;
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.welcome-card {
+  text-align: center;
+  transform: translateY(-20px);
+}
+
+.user-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  margin: 0 auto 22px;
+  box-shadow: 0 0 35px rgba(0, 140, 255, 0.35);
+}
+
+.welcome-card h1 {
+  font-size: 32px;
+  font-weight: 400;
+  margin: 0 0 24px;
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.loading-dots span:nth-child(4) {
+  animation-delay: 0.45s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
