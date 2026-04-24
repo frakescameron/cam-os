@@ -407,8 +407,8 @@ function ProjectsApp() {
           📄 cam-os.txt
         </button>
 
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/wgu-backend-project", "_blank")}>
-          📄 WGU Backend Project.txt
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/network-2-rewired", "_blank")}>
+          📄 Network 2 Rewired.txt
         </button>
       </main>
     </div>
