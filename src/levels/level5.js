@@ -1,5 +1,5 @@
 export const level5 = {
-  background: "/video/final.mp4",
+  background: "video/final.mp4",
   music: "bossfight.mp3",
   name: "Final Boss: Core Trace",
   worldHeight: 10000,

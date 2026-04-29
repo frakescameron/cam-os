@@ -1,7 +1,7 @@
 export const level4 = {
   name: "Level 4: The Firewall",
   music: "fnfahh.mp3",
-  background: "/video/level34.mp4",
+  background: "video/level34.mp4",
    worldHeight: 18000,
   spawnPlatformId: 1,
   codecLeft: "Models/evilvga.png",

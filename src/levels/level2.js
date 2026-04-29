@@ -1,7 +1,7 @@
 export const level2 = {
   name: "Level 2: Firewall",
   music: "frequnce.mp3",
-  background: "/video/level2.mp4",
+  background: "video/level2.mp4",
   worldHeight: 5000,
   spawnPlatformId: 1,
   codecLeft: "Models/oldcodec.png",

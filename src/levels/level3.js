@@ -1,5 +1,5 @@
 export const level3 = {
-  background: "/video/level34.mp4",
+  background: "video/level34.mp4",
   music: "Concrete.mp3",
   name: "Level 3: Packet Abyss",
   worldHeight: 15000,

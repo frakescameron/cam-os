@@ -1,7 +1,7 @@
 export const level0 = {
   name: "Level 0: Open Ports",
   music: "Factory.mp3",
-  background: "/video/spacehole.mp4",
+  background: "video/spacehole.mp4",
   worldHeight: 3200,
   spawnPlatformId: 1,
   codecLeft: "Models/oldcodec.png",
