@@ -399,8 +399,8 @@ function ProjectsApp() {
         <h2>Projects</h2>
         <p>Here's a list of my projects that I have created. Double click on any to open it.</p>
 
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/odin-recipes", "_blank")}>
-          📄 Odin Recipies.txt
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/Rock-Church-Music", "_blank")}>
+          📄 Rock Church Music.txt
         </button>
 
         <button onDoubleClick={() => window.open("https://github.com/frakescameron/cam-os", "_blank")}>
@@ -410,6 +410,19 @@ function ProjectsApp() {
         <button onDoubleClick={() => window.open("https://github.com/frakescameron/network-2-rewired", "_blank")}>
           📄 Network 2 Rewired.txt
         </button>
+
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/odin-recipes", "_blank")}>
+          📄 Odin Recipes.txt
+        </button>
+
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/win11-setup-tool", "_blank")}>
+          📄 Windows 11 Setup Tool.txt
+        </button>
+
+        <button onDoubleClick={() => window.open("https://github.com/frakescameron/file-forge", "_blank")}>
+          📄 File Forge.txt
+        </button>
+
       </main>
     </div>
   );
