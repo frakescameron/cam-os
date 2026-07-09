@@ -433,8 +433,12 @@ function HomelabApp() {
     <>
       <h2>Homelab</h2>
       <p>
-        Proxmox, Windows Server, Active Directory, DNS, DHCP, Linux, and
-        cybersecurity labs.
+        My homelab is built around a dedicated server running Proxmox VE, which I use to gain hands-on experience with virtualization, networking, and self-hosted infrastructure. The server hosts three LXC containers currently: Nextcloud for private cloud storage and file synchronization, Pi-hole for network-wide DNS filtering, and Nginx Proxy Manager for managing reverse proxies and internal services.
+
+The network is routed by a dedicated Lenovo PC running pfSense with two 1 Gbps network interface cards. One NIC connects to a Motorola modem for WAN access, while the other connects to a fanless managed cisco 2960 switch. The network is segmented into three VLANs using Router-on-a-Stick (ROAS). VLAN 10 is dedicated to the homelab infrastructure, VLAN 20 serves the wireless network through an access point, and VLAN 30 is used for wired client devices connected directly to the switch. Inter-VLAN routing is handled by pfSense over an 802.1Q trunk connection between the router and switch. A VPN has not yet been configured, but it is planned as a future enhancement to provide secure remote access.
+
+Building and maintaining this homelab has given me practical experience with Proxmox virtualization, LXC containers, pfSense firewall and routing, VLAN configuration, Router-on-a-Stick (ROAS), 802.1Q trunking, DNS management, reverse proxy configuration, and self-hosted infrastructure. I continue to expand the environment as I learn new networking, systems administration, and cybersecurity concepts. In the future I want to run Windows Server throughout my home. I have ran Windows Server in the past but the VM is currently shut down until I get some home desktops for the offices in the house 
+
       </p>
     </>
   );
