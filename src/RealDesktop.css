@@ -1,9 +1,15 @@
 .real-desktop {
   position: fixed;
   inset: 0;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.25)),
-    url("/cam.jpg") center 65% / 100% auto no-repeat;
+
+  background-image:
+    linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.25)),
+    url("/cam.png");
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
   color: white;
   font-family: "Segoe UI", Arial, sans-serif;
   overflow: hidden;
@@ -258,7 +264,7 @@
 }
 
 .terminal-app {
-  height: 230px;
+  height: 550px;
   background: #050505;
   color: #00ff66;
   font-family: Consolas, "Courier New", monospace;
@@ -269,7 +275,7 @@
 }
 
 .terminal-output {
-  height: 185px;
+  height: 485px;
   overflow-y: auto;
 }
 

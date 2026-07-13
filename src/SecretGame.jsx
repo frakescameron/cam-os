@@ -110,6 +110,14 @@ function SecretGame() {
   const [bossDeathPrompt, setBossDeathPrompt] = useState(false);
   const hazardYRef = useRef(hazardY);
   const maxJumps = currentLevel.questionEveryJumps || 10;
+  const currentQuestionRef = useRef(currentQuestion);
+  
+
+
+useEffect(() => {
+  currentQuestionRef.current = currentQuestion;
+}, [currentQuestion]);
+
 
 useEffect(() => {
   hazardYRef.current = hazardY;
@@ -752,7 +760,7 @@ function handleSlopeCollision(oldP, newP) {
 
     if (answerIndex !== undefined) {
       e.preventDefault();
-      const answer = currentQuestion.answers[answerIndex];
+      const answer = currentQuestionRef.current.answers[answerIndex];
 
     if (answer) {
       chooseAnswer(answer.result);
