@@ -248,7 +248,7 @@ export default function RealDesktop() {
                   />
                 )}
 
-                {app.id === "projects" && <ProjectsApp />}
+                {app.id === "projects" && <ProjectsApp openApp={openApp} />}
 
                 {app.id === "homelab" && <HomelabApp />}
 
@@ -388,79 +388,331 @@ export default function RealDesktop() {
   );
 }
 
-function ProjectsApp() {
+function ProjectsApp({ openApp }) {
+  const [selected, setSelected] = useState(null);
+  const [search, setSearch] = useState("");
+
+  const files = [
+    {
+      name: "Rock Church Music",
+      ext: "txt",
+      type: "Text Document",
+      modified: "8/12/2026 3:41 PM",
+      size: "4 KB",
+      url: "https://github.com/frakescameron/Rock-Church-Music",
+    },
+    {
+      name: "cam-os",
+      ext: "txt",
+      type: "Text Document",
+      modified: "8/20/2026 9:02 AM",
+      size: "12 KB",
+      url: "https://github.com/frakescameron/cam-os",
+    },
+    {
+      name: "Network 2 Rewired",
+      ext: "txt",
+      type: "Text Document",
+      modified: "7/30/2026 6:18 PM",
+      size: "3 KB",
+      url: "https://github.com/frakescameron/network-2-rewired",
+    },
+    {
+      name: "Odin Recipes",
+      ext: "txt",
+      type: "Text Document",
+      modified: "6/14/2026 11:05 AM",
+      size: "2 KB",
+      url: "https://github.com/frakescameron/odin-recipes",
+    },
+    {
+      name: "Windows 11 Setup Tool",
+      ext: "txt",
+      type: "Text Document",
+      modified: "5/2/2026 1:27 PM",
+      size: "6 KB",
+      url: "https://github.com/frakescameron/win11-setup-tool",
+    },
+    {
+      name: "File Forge",
+      ext: "txt",
+      type: "Text Document",
+      modified: "4/18/2026 4:53 PM",
+      size: "5 KB",
+      url: "https://github.com/frakescameron/file-forge",
+    },
+    {
+      name: "Pyclass",
+      ext: "txt",
+      type: "Text Document",
+      modified: "3/9/2026 10:11 AM",
+      size: "3 KB",
+      url: "https://github.com/frakescameron/PyClass",
+    },
+    {
+      name: "Homelab-Documentation",
+      ext: "txt",
+      type: "Text Document",
+      modified: "8/25/2026 8:30 PM",
+      size: "9 KB",
+      url: "https://github.com/frakescameron/Homelab-Documentation",
+    },
+    {
+      name: "CheckQuest",
+      ext: "txt",
+      type: "Text Document",
+      modified: "2/27/2026 2:44 PM",
+      size: "7 KB",
+      url: "https://github.com/frakescameron/CheckQuest",
+    },
+  ];
+
+  const filteredFiles = files.filter((file) =>
+    file.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const goToQuickAccess = (id) => {
+    if (id === "projects") return; // already here
+    if (!openApp) return;
+
+    const targets = {
+      homelab: { id: "homelab", name: "Homelab", icon: "🖥️" },
+      aboutme: { id: "aboutme", name: "About Me", icon: "📄" },
+    };
+
+    openApp(targets[id]);
+  };
+
   return (
-    <div className="file-explorer">
-      <aside>
-        <p>📁 Projects</p>
-      </aside>
+    <div className="explorer-app">
+      <div className="explorer-toolbar">
+        <div className="explorer-nav-buttons">
+          <button disabled>←</button>
+          <button disabled>→</button>
+          <button disabled>↑</button>
+        </div>
+        <div className="explorer-address">
+          <span>📁 This PC</span>
+          <span className="sep">›</span>
+          <span>Projects</span>
+        </div>
+        <div className="explorer-search">
+          <input
+            placeholder="Search Projects"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
 
-      <main>
-        <h2>Projects</h2>
-        <p>Here's a list of my projects that I have created. Double click on any to open it.</p>
+      <div className="explorer-body">
+        <aside className="explorer-sidebar">
+          <p className="sidebar-label">Quick access</p>
+          <p className="sidebar-item active">📁 Projects</p>
+          <p
+            className="sidebar-item clickable"
+            onClick={() => goToQuickAccess("homelab")}
+          >
+            🖥️ Homelab
+          </p>
+          <p
+            className="sidebar-item clickable"
+            onClick={() => goToQuickAccess("aboutme")}
+          >
+            📄 About Me
+          </p>
+        </aside>
 
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/Rock-Church-Music", "_blank")}>
-          📄 Rock Church Music.txt
-        </button>
+        <div className="explorer-main">
+          <div className="explorer-header-row">
+            <span className="col-name">Name</span>
+            <span className="col-date">Date modified</span>
+            <span className="col-type">Type</span>
+            <span className="col-size">Size</span>
+          </div>
 
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/cam-os", "_blank")}>
-          📄 cam-os.txt
-        </button>
+          <div className="explorer-list">
+            {filteredFiles.length === 0 && (
+              <p className="explorer-empty">
+                No items match "{search}".
+              </p>
+            )}
 
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/network-2-rewired", "_blank")}>
-          📄 Network 2 Rewired.txt
-        </button>
+            {filteredFiles.map((file) => (
+              <div
+                key={file.name}
+                className={`explorer-row ${
+                  selected === file.name ? "selected" : ""
+                }`}
+                onClick={() => setSelected(file.name)}
+                onDoubleClick={() => window.open(file.url, "_blank")}
+              >
+                <span className="col-name">
+                  <span className="file-icon">📄</span>
+                  {file.name}.{file.ext}
+                </span>
+                <span className="col-date">{file.modified}</span>
+                <span className="col-type">{file.type}</span>
+                <span className="col-size">{file.size}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/odin-recipes", "_blank")}>
-          📄 Odin Recipes.txt
-        </button>
-
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/win11-setup-tool", "_blank")}>
-          📄 Windows 11 Setup Tool.txt
-        </button>
-
-        <button onDoubleClick={() => window.open("https://github.com/frakescameron/file-forge", "_blank")}>
-          📄 File Forge.txt
-        </button>
-
-      </main>
+      <div className="explorer-statusbar">
+        <span>{filteredFiles.length} items</span>
+        {selected && <span>1 item selected</span>}
+      </div>
     </div>
   );
 }
 
 function HomelabApp() {
   return (
-    <>
-      <h2>Homelab</h2>
-      <p>
-        My homelab is built around a dedicated server running Proxmox VE, which I use to gain hands-on experience with virtualization, networking, and self-hosted infrastructure. The server hosts three LXC containers currently: Nextcloud for private cloud storage and file synchronization, Pi-hole for network-wide DNS filtering, and Nginx Proxy Manager for managing reverse proxies and internal services.
+    <div className="text-document">
+      <div className="about-header">
+        <div className="about-avatar">🖥️</div>
+        <div>
+          <h2>Homelab</h2>
+          <p className="about-role">Proxmox · pfSense · VLANs</p>
+        </div>
+      </div>
 
-The network is routed by a dedicated Lenovo PC running pfSense with two 1 Gbps network interface cards. One NIC connects to a Motorola modem for WAN access, while the other connects to a fanless managed cisco 2960 switch. The network is segmented into three VLANs using Router-on-a-Stick (ROAS). VLAN 10 is dedicated to the homelab infrastructure, VLAN 20 serves the wireless network through an access point, and VLAN 30 is used for wired client devices connected directly to the switch. Inter-VLAN routing is handled by pfSense over an 802.1Q trunk connection between the router and switch. A VPN has not yet been configured, but it is planned as a future enhancement to provide secure remote access.
+      <div className="about-badges">
+        <span className="badge badge-earned">Proxmox VE</span>
+        <span className="badge badge-earned">pfSense</span>
+        <span className="badge badge-earned">LXC</span>
+        <span className="badge badge-earned">802.1Q Trunking</span>
+        <span className="badge badge-progress">VPN (planned)</span>
+      </div>
 
-Building and maintaining this homelab has given me practical experience with Proxmox virtualization, LXC containers, pfSense firewall and routing, VLAN configuration, Router-on-a-Stick (ROAS), 802.1Q trunking, DNS management, reverse proxy configuration, and self-hosted infrastructure. I continue to expand the environment as I learn new networking, systems administration, and cybersecurity concepts. In the future I want to run Windows Server throughout my home. I have ran Windows Server in the past but the VM is currently shut down until I get some home desktops for the offices in the house 
+      <section className="about-section">
+        <h3>Server &amp; Virtualization</h3>
+        <p>
+          My homelab is built around a dedicated server running Proxmox VE,
+          which I use to gain hands-on experience with virtualization,
+          networking, and self-hosted infrastructure. The server currently
+          hosts three LXC containers: Nextcloud for private cloud storage and
+          file sync, Pi-hole for network-wide DNS filtering, and Nginx Proxy
+          Manager for reverse proxies and internal services.
+        </p>
+      </section>
 
-      </p>
-    </>
+      <section className="about-section">
+        <h3>Network Architecture</h3>
+        <p>
+          The network is routed by a dedicated Lenovo PC running pfSense with
+          two 1 Gbps NICs — one to a Motorola modem for WAN, the other to a
+          fanless managed Cisco 2960 switch. It's segmented into three VLANs
+          using Router-on-a-Stick: VLAN 10 for homelab infrastructure, VLAN 20
+          for wireless clients, and VLAN 30 for wired clients on the switch.
+          Inter-VLAN routing runs over an 802.1Q trunk between the router and
+          switch. A VPN isn't configured yet but is planned for secure remote
+          access.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>What's Next</h3>
+        <p>
+          I want to eventually run Windows Server throughout the house. I've
+          run it before, but that VM is shut down for now until I get some
+          home desktops set up for the offices.
+        </p>
+      </section>
+
+      <section className="about-section about-closing">
+        <p>
+          Building and maintaining this lab has given me practical experience
+          with Proxmox, LXC, pfSense, VLAN configuration, 802.1Q trunking, DNS
+          management, and reverse proxies — and I keep expanding it as I learn
+          more about networking, sysadmin, and security.
+        </p>
+      </section>
+
+      <button
+        className="doc-link-button"
+        onDoubleClick={() =>
+          window.open(
+            "https://github.com/frakescameron/Homelab-Documentation",
+            "_blank"
+          )
+        }
+      >
+        📄 My Homelab Documentation
+      </button>
+    </div>
   );
 }
 
 function AboutMeApp() {
   return (
     <div className="text-document">
-      <h2>About Me</h2>
-      <p>
-        About Me
+      <div className="about-header">
+        <div className="about-avatar">CF</div>
+        <div>
+          <h2>Cameron</h2>
+          <p className="about-role">Computer Science Student · WGU</p>
+        </div>
+      </div>
 
-I’m a Computer Science student at WGU focused on building real-world systems, not just completing coursework. My main interests are networking, cybersecurity, and website development, and I spend a lot of time working hands-on in my homelab to actually understand how everything works under the hood.
+      <div className="about-badges">
+        <span className="badge badge-earned">✅ CCNA</span>
+        <span className="badge badge-progress">📘 Security+ (in progress)</span>
+      </div>
 
-Right now I’m running a Proxmox-based environment with Windows Server, Active Directory, DNS, DHCP, and domain-joined clients. I use it to simulate real enterprise setups and troubleshoot things the way they’d happen in an actual IT environment. I’m also working toward my CCNA and expanding into Linux and security-focused tools.
+      <section className="about-section">
+        <h3>Who I Am</h3>
+        <p>
+          I'm a Computer Science student focused on building real-world systems,
+          not just completing coursework. My main interests are networking,
+          cybersecurity, and web development, and I spend a lot of time working
+          hands-on in my homelab to actually understand how things work under
+          the hood.
+        </p>
+      </section>
 
-On the development side, I’ve built backend applications using Spring Boot and JPA, creating APIs and working with relational data models. I like projects that combine software with infrastructure—things that actually behave like real systems instead of isolated apps.
+      <section className="about-section">
+        <h3>What I'm Working On</h3>
+        <p>
+          I'm running a Proxmox-based environment with Windows Server, Active
+          Directory, DNS, DHCP, and domain-joined clients to simulate real
+          enterprise setups and troubleshoot things the way they'd happen in an
+          actual IT environment. I recently earned my CCNA and I'm now working
+          toward Security+, while continuing to expand into Linux and
+          security-focused tooling.
+        </p>
+      </section>
 
-Outside of tech, I’m involved in live audio production, running sound for events and working with digital mixing consoles, routing, and signal flow. That’s pushed me to think more about system design, troubleshooting, and consistency under pressure.
+      <section className="about-section">
+        <h3>Development</h3>
+        <p>
+          On the development side, I've built backend applications using
+          Spring Boot and JPA, creating APIs and working with relational data
+          models. I like projects that combine software with infrastructure —
+          things that behave like real systems instead of isolated apps.
+        </p>
+      </section>
 
-This project (CamOS) is a mix of everything I enjoy—development, systems thinking, and building something interactive that reflects how I approach learning. The goal isn’t just to show what I know, but how I build, test, and improve things over time.
-      </p>
+      <section className="about-section">
+        <h3>Outside of Tech</h3>
+        <p>
+          I'm involved in live audio production, running sound for events and
+          working with digital mixing consoles, routing, and signal flow.
+          That's pushed me to think more about system design, troubleshooting,
+          and consistency under pressure.
+        </p>
+      </section>
+
+      <section className="about-section about-closing">
+        <p>
+          This project (CamOS) is a mix of everything I enjoy — development,
+          systems thinking, and building something interactive that reflects
+          how I approach learning. The goal isn't just to show what I know,
+          but how I build, test, and improve things over time.
+        </p>
+      </section>
     </div>
   );
 }
