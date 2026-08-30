@@ -1121,3 +1121,42 @@
 .app-window.maximized .window-content:has(.text-document) {
   overflow-y: auto;
 }
+
+.resume-entry {
+  margin-bottom: 12px;
+}
+
+.resume-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 15px;
+}
+
+.resume-entry-head span {
+  font-size: 12px;
+  font-family: Consolas, monospace;
+  opacity: 0.6;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.resume-entry-sub {
+  margin: 2px 0 4px;
+  font-size: 13px;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.resume-more summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-family: Consolas, monospace;
+  opacity: 0.7;
+  margin: 10px 0;
+}
+
+.resume-download {
+  text-decoration: none;
+  margin-bottom: 18px;
+}

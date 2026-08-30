@@ -7,6 +7,7 @@ const apps = [
   { id: "homelab", name: "Homelab", icon: "🖥️" },
   { id: "terminal", name: "Terminal", icon: "💻" },
   { id: "aboutme", name: "About Me", icon: "📄" },
+  { id: "resume", name: "Resume", icon: "🧾" },
   { id: "fileexplorer", name: "File Explorer", icon: "🗂️" },
   { id: "chrome", name: "Chrome", icon: "🌐" },
   { id: "calculator", name: "Calculator", icon: "🧮" },
@@ -17,7 +18,7 @@ const apps = [
   
 ];
 
-const desktopAppIds = ["projects", "homelab", "terminal", "aboutme"];
+const desktopAppIds = ["projects", "homelab", "terminal", "aboutme", "resume"];
 
 export default function RealDesktop() {
   const [desktopFiles, setDesktopFiles] = useState([]);
@@ -253,6 +254,8 @@ export default function RealDesktop() {
                 {app.id === "homelab" && <HomelabApp />}
 
                 {app.id === "aboutme" && <AboutMeApp />}
+
+                {app.id === "resume" && <ResumeApp />}
 
                 {app.id === "fileexplorer" && (
                   <FileExplorer
@@ -645,6 +648,191 @@ function HomelabApp() {
     </div>
   );
 }
+
+function ResumeApp() {
+  return (
+    <div className="text-document">
+      <div className="about-header">
+        <div className="about-avatar">CF</div>
+        <div>
+          <h2>Cameron Frakes</h2>
+          <p className="about-role">Pocatello, ID · frakescameron@gmail.com</p>
+        </div>
+      </div>
+
+      <div className="about-badges">
+        <span className="badge badge-earned">✅ CCNA</span>
+        <span className="badge badge-earned">✅ Linux Essentials</span>
+        <span className="badge badge-progress">📘 Security+ (in progress)</span>
+      </div>
+
+      <a
+        href="/resume.pdf"
+        download="Cameron-Frakes-Resume.pdf"
+        className="doc-link-button resume-download"
+      >
+        ⬇️ Download Resume (PDF)
+      </a>
+
+      <section className="about-section">
+        <h3>Summary</h3>
+        <p>
+          Motivated and detail-oriented professional with a strong foundation
+          in technology, problem solving, and critical thinking. Experienced
+          in hardware and software troubleshooting, customer support, and
+          collaborative project work, with the ability to quickly learn new
+          technologies and adapt to dynamic environments.
+        </p>
+      </section>
+
+      <section className="about-section">
+        <h3>Experience</h3>
+
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>Customer Service Specialist</strong>
+            <span>Nov 2024 – Present</span>
+          </div>
+          <p className="resume-entry-sub">The Home Depot · Pocatello, ID</p>
+          <p>
+            Managed inventory and product stocking, implemented planograms to
+            optimize displays, and maintained the garden department while
+            assisting customers with plant care and gardening solutions.
+          </p>
+        </div>
+
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>Computer Repair Technician</strong>
+            <span>May 2020 – Present</span>
+          </div>
+          <p className="resume-entry-sub">Self Employed · Pocatello, ID</p>
+          <p>
+            Handle hardware repairs and diagnostics for local clients —
+            disassembling and reassembling desktops and laptops, replacing
+            drives, RAM, power supplies, and motherboards, plus OS setup and
+            driver support.
+          </p>
+        </div>
+
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>Dispute Resolution Specialist</strong>
+            <span>May 2023 – Nov 2024</span>
+          </div>
+          <p className="resume-entry-sub">
+            Idaho Central Credit Union · Pocatello, ID
+          </p>
+          <p>
+            Handled fraud cases and resolved discrepancies on the dispute
+            team, using strong attention to detail to uphold company security
+            standards.
+          </p>
+        </div>
+
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>Assistant Store Manager</strong>
+            <span>Nov 2021 – Apr 2023</span>
+          </div>
+          <p className="resume-entry-sub">AutoZone · Pocatello, ID</p>
+          <p>
+            Performed vehicle diagnostics, identified required parts, and
+            managed inventory to keep operations running smoothly.
+          </p>
+        </div>
+
+        <details className="resume-more">
+          <summary>Show earlier experience</summary>
+
+          <div className="resume-entry">
+            <div className="resume-entry-head">
+              <strong>Automotive Service Technician</strong>
+              <span>May 2021 – Oct 2021</span>
+            </div>
+            <p className="resume-entry-sub">Nissan · Pocatello, ID</p>
+            <p>
+              Performed routine maintenance and diagnostics including tire
+              rotations, oil changes, brake flushes, and inspections.
+            </p>
+          </div>
+
+          <div className="resume-entry">
+            <div className="resume-entry-head">
+              <strong>Assistant Director of Dining Services</strong>
+              <span>Aug 2020 – Nov 2020</span>
+            </div>
+            <p className="resume-entry-sub">
+              Brookdale Senior Living · Pocatello, ID
+            </p>
+            <p>
+              Coordinated dining area setup and upkeep, overseeing dishwashing
+              operations and maintaining a welcoming environment for guests.
+            </p>
+          </div>
+
+          <div className="resume-entry">
+            <div className="resume-entry-head">
+              <strong>Grounds Maintenance Supervisor</strong>
+              <span>Jan 2019 – Jan 2020</span>
+            </div>
+            <p className="resume-entry-sub">
+              Grace Lutheran School · Pocatello, ID
+            </p>
+            <p>
+              Managed full lawn care for the complex with minimal supervision.
+            </p>
+          </div>
+
+          <div className="resume-entry">
+            <div className="resume-entry-head">
+              <strong>Summer Maintenance Technician</strong>
+              <span>May 2018 – Aug 2018</span>
+            </div>
+            <p className="resume-entry-sub">21st Century · Pocatello, ID</p>
+            <p>
+              Supported facility management with trench digging, furniture
+              relocation, and general upkeep.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <section className="about-section">
+        <h3>Education</h3>
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>B.S. Computer Science</strong>
+            <span>Oct 2024 – Present</span>
+          </div>
+          <p className="resume-entry-sub">WGU · Remote</p>
+        </div>
+      </section>
+
+      <section className="about-section">
+        <h3>Certifications</h3>
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>Cisco Certified Network Associate (CCNA)</strong>
+            <span>Aug 2026 – Aug 2029</span>
+          </div>
+        </div>
+        <div className="resume-entry">
+          <div className="resume-entry-head">
+            <strong>Linux Essentials Certificate</strong>
+            <span>May 2026 – Present</span>
+          </div>
+          <p className="resume-entry-sub">Linux Professional Institute</p>
+        </div>
+      </section>
+
+      <section className="about-section about-closing">
+        <p>Authorized to work in the US for any employer.</p>
+      </section>
+    </div>
+  );
+}
+
 
 function AboutMeApp() {
   return (
