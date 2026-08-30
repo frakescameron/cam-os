@@ -72,6 +72,10 @@
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(14px);
   pointer-events: auto;
+
+  /* new */
+  display: flex;
+  flex-direction: column;
 }
 
 .window-titlebar {
@@ -82,6 +86,9 @@
   justify-content: space-between;
   padding: 0 10px 0 14px;
   font-size: 14px;
+
+  /* new */
+  flex-shrink: 0;
 }
 
 .window-titlebar button {
@@ -102,6 +109,12 @@
 .window-content {
   padding: 18px;
   font-size: 15px;
+
+  /* new */
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .window-content h2 {
@@ -1103,4 +1116,8 @@
 /* Kill scrolling inside maximized windows */
 .app-window.maximized .window-content {
   overflow: hidden;
+}
+
+.app-window.maximized .window-content:has(.text-document) {
+  overflow-y: auto;
 }
