@@ -110,9 +110,9 @@ export default function RealDesktop() {
 
   const startDrag = (e, appId) => {
     if (e.target.tagName === "BUTTON") return;
+    if (window.innerWidth <= 768) return; // skip dragging on mobile
 
     const currentPosition = windowPositions[appId] || { x: 180, y: 110 };
-
     setDragging({
       appId,
       offsetX: e.clientX - currentPosition.x,
@@ -175,7 +175,7 @@ export default function RealDesktop() {
               <button
                 key={app.id}
                 className="desktop-icon"
-                onDoubleClick={() => openApp(app)}
+                onClick={() => openApp(app)}
               >
                 <span>{app.icon}</span>
                 <p>{app.name}</p>
@@ -186,7 +186,7 @@ export default function RealDesktop() {
             <button
               key={file.id}
               className="desktop-icon"
-              onDoubleClick={() =>
+              onClick={() =>
                 openApp({
                   id: file.id,
                   name: file.name,
@@ -543,13 +543,14 @@ function ProjectsApp({ openApp }) {
 
             {filteredFiles.map((file) => (
               <div
-                key={file.name}
-                className={`explorer-row ${
-                  selected === file.name ? "selected" : ""
-                }`}
-                onClick={() => setSelected(file.name)}
-                onDoubleClick={() => window.open(file.url, "_blank")}
-              >
+
+                    key={file.name}
+                    className={`explorer-row ${selected === file.name ? "selected" : ""}`}
+                    onClick={() => {
+                      setSelected(file.name);
+                      window.open(file.url, "_blank");   // combine select + open into one tap
+                    }}
+                  >
                 <span className="col-name">
                   <span className="file-icon">📄</span>
                   {file.name}.{file.ext}
@@ -636,7 +637,7 @@ function HomelabApp() {
 
       <button
         className="doc-link-button"
-        onDoubleClick={() =>
+        onClick={() =>
           window.open(
             "https://github.com/frakescameron/Homelab-Documentation",
             "_blank"
@@ -920,7 +921,7 @@ function FileExplorer({ apps, desktopFiles, openApp }) {
         {apps
           .filter((app) => ["projects", "homelab", "aboutme"].includes(app.id))
           .map((app) => (
-            <button key={app.id} onDoubleClick={() => openApp(app)}>
+            <button key={app.id} onClick={() => openApp(app)}>
               {app.icon} {app.name}
             </button>
           ))}
@@ -928,7 +929,7 @@ function FileExplorer({ apps, desktopFiles, openApp }) {
         {desktopFiles.map((file) => (
           <button
             key={file.id}
-            onDoubleClick={() =>
+            onClick={() =>
               openApp({
                 id: file.id,
                 name: file.name,
@@ -1097,6 +1098,39 @@ function Drawpad() {
     ctx.moveTo(pos.x, pos.y);
   };
 
+  const getTouchPos = (e) => {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const scaleX = canvasRef.current.width / rect.width;
+    const scaleY = canvasRef.current.height / rect.height;
+
+    return {
+      x: (touch.clientX - rect.left) * scaleX,
+      y: (touch.clientY - rect.top) * scaleY,
+    };
+  };
+
+  const startDrawingTouch = (e) => {
+    e.preventDefault();
+    drawing.current = true;
+    const ctx = canvasRef.current.getContext("2d");
+    const pos = getTouchPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  };
+
+  const drawTouch = (e) => {
+    e.preventDefault();
+    if (!drawing.current) return;
+    const ctx = canvasRef.current.getContext("2d");
+    const pos = getTouchPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.stroke();
+  };
+
   const draw = (e) => {
     if (!drawing.current) return;
 
@@ -1129,6 +1163,9 @@ function Drawpad() {
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
+        onTouchStart={startDrawingTouch}
+        onTouchMove={drawTouch}
+        onTouchEnd={stopDrawing}
       />
       <button onClick={clearCanvas}>Clear</button>
     </div>
@@ -1366,6 +1403,13 @@ function BlocksGame() {
           <p>↑ Rotate</p>
           <p>↓ Drop</p>
           <p>Space Quick Drop</p>
+        </div>
+        <div className="blocks-touch-controls">
+          <button onClick={() => movePiece(-1)}>←</button>
+          <button onClick={rotatePiece}>⟳</button>
+          <button onClick={() => movePiece(1)}>→</button>
+          <button onClick={dropPiece}>↓</button>
+          <button onClick={hardDrop}>⤓</button>
         </div>
       </div>
     </div>
