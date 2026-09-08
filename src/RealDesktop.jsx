@@ -458,7 +458,7 @@ function ProjectsApp({ openApp }) {
       type: "Text Document",
       modified: "8/25/2026 8:30 PM",
       size: "9 KB",
-      url: "https://github.com/frakescameron/Homelab-Documentation",
+      url: "https://github.com/frakescameron/Homelab-Network-Documentation",
     },
     {
       name: "CheckQuest",
@@ -639,7 +639,7 @@ function HomelabApp() {
         className="doc-link-button"
         onClick={() =>
           window.open(
-            "https://github.com/frakescameron/Homelab-Documentation",
+            "https://github.com/frakescameron/Homelab-Network-Documentation",
             "_blank"
           )
         }
