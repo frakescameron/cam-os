@@ -437,6 +437,14 @@ function ProjectsApp({ openApp }) {
       url: "https://github.com/frakescameron/win11-setup-tool",
     },
     {
+      name: "Playable Wallpaper",
+      ext: "txt",
+      type: "Text Document",
+      modified: "5/2/2026 1:27 PM",
+      size: "6 KB",
+      url: "https://github.com/frakescameron/Playable-Wallpaper",
+    },
+    {
       name: "File Forge",
       ext: "txt",
       type: "Text Document",
@@ -453,7 +461,7 @@ function ProjectsApp({ openApp }) {
       url: "https://github.com/frakescameron/PyClass",
     },
     {
-      name: "Homelab-Documentation",
+      name: "Homelab-Network-Documentation",
       ext: "txt",
       type: "Text Document",
       modified: "8/25/2026 8:30 PM",
@@ -644,7 +652,7 @@ function HomelabApp() {
           )
         }
       >
-        📄 My Homelab Documentation
+        📄 My Homelab Network Documentation
       </button>
     </div>
   );
